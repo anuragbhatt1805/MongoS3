@@ -140,28 +140,6 @@ spec:
                   cpu: "1000m"
 ```
 
----
-
-## ⚙️ Configuration & Environment Variables
-
-All parameters can be configured via environment variables or CLI options:
-
-| Environment Variable | CLI Flag | Default | Required | Description |
-|---|---|---|---|---|
-| `MONGO_URI` / `MONGODB_URI` | `--mongo-uri` | *None* | **Yes** | MongoDB connection string (`mongodb://` or `mongodb+srv://`). Passwords are automatically masked in logs. |
-| `S3_BUCKET` | `--s3-bucket` | *None* | **Yes** | Target S3 bucket name. |
-| `S3_PREFIX` | `--s3-prefix` | `mongodb-backups` | No | Prefix / subfolder in the bucket (e.g. `backups/daily`). |
-| `S3_KEY` | `--s3-key` | *auto-generated* | No | Explicit S3 object key. Defaults to `{prefix}/mongodb_backup_%Y%m%d_%H%M%S.archive.gz`. |
-| `AWS_ACCESS_KEY_ID` | *Env only* | *None* | Optional* | AWS Access Key ID (*not required if running with AWS IAM Roles / IRSA / ECS Task Roles). |
-| `AWS_SECRET_ACCESS_KEY` | *Env only* | *None* | Optional* | AWS Secret Access Key (*not required if running with AWS IAM Roles / IRSA / ECS Task Roles). |
-| `AWS_SESSION_TOKEN` | *Env only* | *None* | No | AWS Temporary Session Token (for STS assumed roles). |
-| `AWS_REGION` | `--aws-region` | `us-east-1` | No | AWS target region (e.g., `us-east-1`, `eu-west-1`). |
-| `S3_STORAGE_CLASS` | `--storage-class`| `STANDARD` | No | S3 storage tier: `STANDARD`, `STANDARD_IA`, `INTELLIGENT_TIERING`, `GLACIER`. |
-| `S3_ENDPOINT_URL` | `--s3-endpoint-url`| *None* | No | Custom S3 endpoint URL for S3-compatible providers (MinIO, R2, LocalStack). |
-| `MONGO_DATABASE` | `--database` | *all* | No | Restrict backup to a single specific database. |
-| `MONGO_COLLECTION` | `--collection` | *all* | No | Restrict backup to a single specific collection (requires `--database`). |
-| `MONGODUMP_EXTRA_ARGS` | `--mongodump-extra-args` | *None* | No | Custom flags passed to `mongodump` (e.g. `--oplog`). |
-| `BACKUP_DIR` | `--backup-dir` | `/tmp/backups` | No | Internal scratch directory inside container. |
 
 ---
 
@@ -202,7 +180,7 @@ MongoS3 supports any S3-compliant object store via `S3_ENDPOINT_URL`:
 For advanced topics, technical lifecycle diagrams, and comprehensive deployment configurations, refer to the project documentation:
 
 - 🏗️ [**Architecture & Execution Flow**](https://github.com/anuragbhatt1805/MongoS3/blob/main/ARCHITECTURE.md) – Detailed step-by-step lifecycle, sub-process pipe design, and memory bounds.
-- 📦 [**Installation & Deployment Guide**](https://github.com/anuragbhatt1805/MongoS3/blob/main/INSTALLATION.md) – Extended setup guides for AWS ECS, AWS Lambda, Kubernetes, and local development.
+- 📦 [**Installation & Configuration Guide**](https://github.com/anuragbhatt1805/MongoS3/blob/main/INSTALLATION.md) – Setup options, complete environment variable reference, CLI flags, and deployment examples.
 
 ---
 

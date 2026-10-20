@@ -82,7 +82,7 @@ docker compose run --rm backup
 
 ---
 
-## ⚙️ Configuration Reference
+## ⚙️ Configuration & Environment Variables
 
 All settings can be specified via **Environment Variables** or **CLI Arguments** (CLI arguments take precedence over environment variables).
 
