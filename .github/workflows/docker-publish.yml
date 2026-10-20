@@ -18,7 +18,7 @@ on:
         default: ''
 
 env:
-  IMAGE_NAME: mongo-s3-backup
+  IMAGE_NAME: mongos3
 
 jobs:
   test:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build Local Test Image
         run: |
-          docker build -t mongo-s3-backup:latest .
+          docker build -t anuragbhatt1805/mongos3:latest .
 
       - name: Execute End-to-End Test Suite
         run: |

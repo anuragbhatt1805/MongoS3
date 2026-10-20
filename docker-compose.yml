@@ -1,10 +1,10 @@
 services:
   backup:
-    image: anuragbhatt1805/mongo-s3-backup:latest
+    image: anuragbhatt1805/mongos3:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: mongo-s3-backup
+    container_name: MongoS3
     env_file:
       - .env
     restart: "no"

@@ -357,7 +357,7 @@ def upload_to_s3(s3_client, local_file: Path, bucket: str, s3_key: str, storage_
     extra_args = {
         "StorageClass": storage_class,
         "Metadata": {
-            "backup_tool": "mongo-s3-backup",
+            "backup_tool": "MongoS3",
             "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "original_filename": local_file.name,
         },

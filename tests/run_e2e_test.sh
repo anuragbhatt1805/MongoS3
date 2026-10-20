@@ -51,7 +51,7 @@ docker run -d --name "${MOCK_S3_CONTAINER}" \
 
 sleep 2
 
-echo "5. Running backup container (mongo-s3-backup:latest)..."
+echo "5. Running backup container (anuragbhatt1805/mongos3:latest)..."
 docker run --rm \
     --network "${NETWORK_NAME}" \
     -e MONGO_URI="mongodb://${MONGO_CONTAINER}:27017" \
@@ -61,7 +61,7 @@ docker run --rm \
     -e AWS_ACCESS_KEY_ID="mock_access_key" \
     -e AWS_SECRET_ACCESS_KEY="mock_secret_key" \
     -e AWS_REGION="us-east-1" \
-    mongo-s3-backup:latest
+    anuragbhatt1805/mongos3:latest
 
 echo ""
 echo "=========================================="

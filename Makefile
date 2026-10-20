@@ -1,6 +1,6 @@
 .PHONY: help build run test scout clean
 
-IMAGE_NAME ?= anuragbhatt1805/mongo-s3-backup:latest
+IMAGE_NAME ?= anuragbhatt1805/mongos3:latest
 
 help: ## Show this help message
 	@echo "Usage: make [target]"

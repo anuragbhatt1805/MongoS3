@@ -45,7 +45,7 @@ For quick start, Docker CLI and Docker Compose setups, and the full environment 
 ### Quick Pull
 
 ```bash
-docker pull anuragbhatt1805/mongo-s3-backup:latest
+docker pull anuragbhatt1805/mongos3:latest
 ```
 
 ---

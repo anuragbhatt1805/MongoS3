@@ -13,7 +13,7 @@ This document details the internal design and lifecycle of the **MongoS3** backu
                                         |
                                         v
                     +---------------------------------------+
-                    |  Container: mongo-s3-backup:latest    |
+                    |  Container: anuragbhatt1805/mongos3:latest |
                     |                                       |
                     | 1. Read Environment Variables / CLI   |
                     | 2. Mask URI & Authorize AWS / S3      |

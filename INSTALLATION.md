@@ -9,7 +9,7 @@ This guide covers installation options, setup instructions, deployment with Dock
 ### Option 1: Pull from Docker Hub
 
 ```bash
-docker pull anuragbhatt1805/mongo-s3-backup:latest
+docker pull anuragbhatt1805/mongos3:latest
 ```
 
 ### Option 2: Build from Source
@@ -17,7 +17,7 @@ docker pull anuragbhatt1805/mongo-s3-backup:latest
 ```bash
 git clone https://github.com/anuragbhatt1805/MongoS3.git
 cd MongoS3
-docker build -t mongo-s3-backup:latest .
+docker build -t anuragbhatt1805/mongos3:latest .
 ```
 
 ---
@@ -34,7 +34,7 @@ docker run --rm \
   -e AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE" \
   -e AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
   -e AWS_REGION="us-east-1" \
-  anuragbhatt1805/mongo-s3-backup:latest
+  anuragbhatt1805/mongos3:latest
 ```
 
 ---
@@ -58,7 +58,7 @@ S3_STORAGE_CLASS=STANDARD
 ### 2. Run via Docker CLI
 
 ```bash
-docker run --rm --env-file .env anuragbhatt1805/mongo-s3-backup:latest
+docker run --rm --env-file .env anuragbhatt1805/mongos3:latest
 ```
 
 ### 3. Run via Docker Compose
@@ -68,7 +68,7 @@ Define the service in [`docker-compose.yml`](docker-compose.yml):
 ```yaml
 services:
   backup:
-    image: anuragbhatt1805/mongo-s3-backup:latest
+    image: anuragbhatt1805/mongos3:latest
     env_file:
       - .env
     restart: "no"
