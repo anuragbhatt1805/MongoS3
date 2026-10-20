@@ -1,7 +1,7 @@
 # MongoDB to S3 Backup Docker Container
 
-[![Docker](https://img.shields.io/badge/Docker-python:3.12--alpine-blue.svg)](https://hub.docker.com/_/python)
-[![Image Size](https://img.shields.io/badge/Disk%20Usage-115MB-brightgreen.svg)](#features)
+[![Docker](https://img.shields.io/badge/Docker-python:3.14--alpine-blue.svg)](https://hub.docker.com/_/python)
+[![Image Size](https://img.shields.io/badge/Disk%20Usage-117MB-brightgreen.svg)](#features)
 [![Download Size](https://img.shields.io/badge/Content%20Size-28MB-brightgreen.svg)](#features)
 [![MongoDB Tools](https://img.shields.io/badge/mongodump-100.14-green.svg)](https://www.mongodb.com/docs/database-tools/)
 [![Boto3](https://img.shields.io/badge/AWS%20SDK-boto3-orange.svg)](https://boto3.amazonaws.com/)
@@ -12,7 +12,7 @@ An ultra-lightweight, production-grade, one-shot Docker container that creates a
 
 ## Features
 
-- **Ultra-Lightweight Footprint:** Built on `python:3.12-alpine` with an uncompressed disk usage of **115 MB** and compressed transfer size of **~28 MB** (down from 295 MB).
+- **Ultra-Lightweight Footprint:** Built on `python:3.14-alpine` with an uncompressed disk usage of **117 MB** and compressed transfer size of **~28 MB** (down from 295 MB).
 - **Official Database Tools:** Uses native `mongodump` with `--archive` and `--gzip` compression for minimal I/O and zero multi-file overhead.
 - **AWS Credential Authorization:** Validates AWS credentials before dumping via STS `get_caller_identity` and tests destination bucket access via S3 `head_bucket`.
 - **High-Performance Upload:** Uses Boto3's `TransferConfig` with multipart chunking and real-time upload progress logging.

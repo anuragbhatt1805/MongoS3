@@ -1,9 +1,10 @@
 # ==============================================================================
 # Ultra-Slim Production Dockerfile for MongoDB to S3 Backup
-# Target Image Size: Under 150MB uncompressed (under ~45MB compressed)
+# Base: python:3.14-alpine
+# Target Image Size: Under 150MB uncompressed (under ~30MB compressed)
 # ==============================================================================
 
-FROM python:3.12-alpine
+FROM python:3.14-alpine
 
 LABEL maintainer="Anurag Bhatt" \
     description="Ultra-lightweight MongoDB backup container with S3 upload"
@@ -24,7 +25,7 @@ RUN apk add --no-cache \
     && find /usr/bin -name "mongo*" ! -name "mongodump" -delete \
     && rm -f /usr/bin/bsondump \
     && pip install --no-cache-dir -r /app/requirements.txt \
-    && find /usr/local/lib/python3.12/site-packages/botocore/data -mindepth 1 -maxdepth 1 -type d ! -name "s3" ! -name "sts" -exec rm -rf {} + \
+    && find /usr/local/lib/python3.*/site-packages/botocore/data -mindepth 1 -maxdepth 1 -type d ! -name "s3" ! -name "sts" -exec rm -rf {} + \
     && python -m pip uninstall -y pip \
     && find /usr/local -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
     && find /usr/local -name "*.pyc" -delete \

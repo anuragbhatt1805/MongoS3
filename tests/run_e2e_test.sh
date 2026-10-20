@@ -47,7 +47,7 @@ echo "4. Starting Mock S3 service inside network..."
 docker run -d --name "${MOCK_S3_CONTAINER}" \
     --network "${NETWORK_NAME}" \
     -v "$(pwd)/tests/mock_s3.py:/app/mock_s3.py:ro" \
-    python:3.12-alpine python /app/mock_s3.py 9005
+    python:3.14-alpine python /app/mock_s3.py 9005
 
 sleep 2
 
