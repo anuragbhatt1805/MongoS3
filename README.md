@@ -1,97 +1,55 @@
-# MongoDB to S3 Backup Container (MongoS3)
+# 🍃 MongoDB to S3 Backup Container (MongoS3)
 
-## Description
+[![Docker](https://img.shields.io/badge/Docker-python:3.14--alpine-blue.svg)](https://hub.docker.com/_/python)
+[![Disk Usage](https://img.shields.io/badge/Disk%20Usage-117MB-brightgreen.svg)](#features)
+[![Download Size](https://img.shields.io/badge/Download%20Size-~28MB-brightgreen.svg)](#features)
+[![MongoDB Tools](https://img.shields.io/badge/mongodump-100.14-green.svg)](https://www.mongodb.com/docs/database-tools/)
+[![AWS SDK](https://img.shields.io/badge/AWS%20SDK-boto3-orange.svg)](https://boto3.amazonaws.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An ultra-lightweight, production-ready, one-shot Docker container that creates a compressed `mongodump` archive of any MongoDB database, authorizes AWS credentials, streams the backup to Amazon S3 (or any S3-compatible storage), verifies object integrity, cleans up temporary local files, and exits cleanly.
+## 📖 Description
 
----
-
-## Features
-
-- **Ultra-Slim Footprint:** Built on `python:3.14-alpine` with an uncompressed disk usage of **117 MB** and a download size of **~28 MB**.
-- **Native MongoDB Tools:** Uses native `mongodump` with `--archive` and `--gzip` compression for single-stream archives.
-- **AWS Pre-flight Verification:** Validates credentials via AWS STS `get_caller_identity` and tests target bucket accessibility via `head_bucket`.
-- **High-Performance Upload:** Implements Boto3 multipart transfer with configurable concurrency and real-time upload progress reporting.
-- **Remote Verification:** Verifies uploaded objects with S3 `head_object` to ensure size and ETag integrity.
-- **Credential Privacy:** Connection string credentials are automatically sanitized and masked in logs.
-- **Security First:** Runs as an unprivileged, non-root user (`appuser`, UID `10001`).
-- **Clean One-Shot Lifecycle:** Automatically purges temporary files and exits with status `0` on success.
-- **S3 Compatibility:** Works with AWS S3, MinIO, Cloudflare R2, Backblaze B2, and LocalStack.
+An ultra-lightweight, production-grade, one-shot Docker container that creates a compressed `mongodump` archive of any MongoDB instance, validates AWS credentials, streams the backup to Amazon S3 (or any S3-compatible store), verifies the upload, cleans up local temporary files, and exits cleanly.
 
 ---
 
-## Architecture
+## ⚡ Features
 
-For the complete architectural design, data flow diagram, and execution lifecycle, see:
+- 🪶 **Ultra-Slim Footprint:** Built on `python:3.14-alpine` with an uncompressed disk usage of **117 MB** and a compressed download size of only **~28 MB**.
+- 🚀 **High Speed & Low I/O:** Streams `mongodump --archive --gzip` directly into a single compressed archive, eliminating disk write amplification and file thrashing.
+- ⚡ **Multi-Threaded Uploads:** Leverages Boto3 multipart chunking (8 MB chunks, 10 concurrent threads) with real-time transfer rate (MB/s) tracking.
+- ⏱️ **Instant Cold Starts:** Boots and initiates backups in under 0.5s, ideal for serverless, CronJobs, and on-demand container tasks.
+- 🔒 **Security Hardened (Non-Root):** Runs strictly as unprivileged `appuser` (`UID 10001`, `GID 10001`) with an isolated temporary workspace.
+- 🛡️ **Credential Redaction:** Automatically parses and masks passwords in connection strings from logs, preventing secret leaks.
+- 🔍 **Pre-Flight Security Audit:** Validates credentials via AWS STS `get_caller_identity` and logs Caller ARN, Account ID, and UserId before dumping.
+- 🧹 **Zero Residual Remnants:** Enforces deterministic file purging in `finally` blocks, guaranteeing zero leftover archives on success or abort.
+- ✅ **Remote Byte Verification:** Calls S3 `head_object` to confirm object existence, assert ContentLength matches, and verify ETag integrity.
+- 📊 **Structured Observability:** Standardized UTC timestamped logs with real-time percentage and throughput metrics.
+- 🌐 **Broad Compatibility:** Works with MongoDB 4.4 through 7.0+, Atlas SRV clusters, AWS S3, MinIO, Cloudflare R2, Backblaze B2, and LocalStack.
+- 🎯 **Clean One-Shot Lifecycle:** Deterministic Unix exit codes (`0` on verified success, `1` on error) for seamless monitoring integration.
+
+---
+
+## 🏗️ Architecture
+
+For the complete architectural design, data flow diagram, and step-by-step execution lifecycle, see:
 👉 [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 
-## Installation
+## 📦 Installation, Setup & Deployment
 
-### Pull from Docker Hub
+For quick start, Docker CLI and Docker Compose setups, and the full environment variable reference, see:
+👉 [INSTALLATION.md](INSTALLATION.md)
+
+### Quick Pull
 
 ```bash
 docker pull anuragbhatt1805/mongo-s3-backup:latest
 ```
 
-### Or Build Locally
-
-```bash
-git clone https://github.com/anuragbhatt1805/MongoS3.git
-cd MongoS3
-docker build -t mongo-s3-backup:latest .
-```
-
 ---
 
-## Setup & Deployment (Docker)
+## 📄 License
 
-### 1. Configure Environment Variables
-
-Create a `.env` file (or provide variables via your orchestrator):
-
-```ini
-# Required
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
-S3_BUCKET=my-database-backups
-
-# Optional AWS Credentials (omit if using IAM Roles / IRSA / ECS Task Roles)
-AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-AWS_REGION=us-east-1
-
-# Optional S3 Settings
-S3_PREFIX=backups/production
-S3_STORAGE_CLASS=STANDARD
-
-# Optional Custom S3 Endpoint (for MinIO, Cloudflare R2, etc.)
-# S3_ENDPOINT_URL=http://minio:9000
-```
-
-### 2. Run via Docker
-
-```bash
-docker run --rm --env-file .env anuragbhatt1805/mongo-s3-backup:latest
-```
-
-### 3. Run via Docker Compose
-
-```yaml
-version: "3.8"
-
-services:
-  backup:
-    image: anuragbhatt1805/mongo-s3-backup:latest
-    env_file: .env
-```
-
-```bash
-docker compose run --rm backup
-```
-
----
-
-## License
-
-MIT
+This project is open-source and licensed under the terms of the [MIT License](LICENSE).
